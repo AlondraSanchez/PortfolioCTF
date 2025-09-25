@@ -29,17 +29,17 @@ El resultado reveló dos puertos abiertos:
 - **22** → acceso remoto por SSH
 - **80** → servidor web
 
-![[Screenshots/Tortuga/SS1.png]]
+![Escaneo de puertos](../../Screenshots/Tortuga/SS1.png)
 
 Sin credenciales para el acceso por SSH, el siguiente paso fue investigar el contenido del sitio web en el puerto 80.
 
-![[Screenshots/Tortuga/SS2.png]]
+![Acceso a web Isla Tortuga](../../Screenshots/Tortuga/SS2.png)
 
 Se trata de un sitio estático, sin formularios ni interacción directa con el usuario. Incluso tras realizar fuzzing con diccionarios comunes y personalizados, no se revelaron rutas adicionales. La clave estaba oculta en el propio contenido narrativo del sitio.
 
 Al acceder a la sección del mapa, aparece una frase que sugiere la existencia de un usuario accesible y una **nota** en su directorio `/home`.
 
-![[Screenshots/Tortuga/SS3.png]]
+![Inspección de web mapa](../../Screenshots/Tortuga/SS3.png)
 
 # Acceso al sistema
 
@@ -51,21 +51,21 @@ hydra -l USUARIO -P /usr/share/wordlists/rockyou.txt ssh://TARGET_IP
 
 El ataque fue exitoso y reveló una contraseña para acceder por SSH.
 
-![[Screenshots/Tortuga/SS4.png]]
+![Ataque de fuerza bruta](../../Screenshots/Tortuga/SS4.png)
 
 Una vez dentro, la `Flag de Usuario` se encontraba fácilmente en el directorio personal.
 
-![[Screenshots/Tortuga/SS5.png]]
+![Acceso remoto y captura de primer flag](../../Screenshots/Tortuga/SS5.png)
 
 **Primer objetivo conseguido 🎉**
 
 Sin embargo, el sitio web insinuaba algo más. Explorando archivos ocultos en el sistema, encontré `.nota.txt`:
 
-![[Screenshots/Tortuga/SS6.png]]
+![Inspección de archivos ocultos](../../Screenshots/Tortuga/SS6.png)
 
 La nota contenía una contraseña, presumiblemente perteneciente a otro usuario del sistema.
 
-![[Screenshots/Tortuga/SS7.png]]
+![Nota oculta](../../Screenshots/Tortuga/SS7.png)
 
 # Escalada de privilegios
 
@@ -75,7 +75,7 @@ Para ello utilicé la herramienta [linpeas](https://github.com/peass-ng/PEASS-ng
 
 Entre los resultados, se detectó una oportunidad de escalada mediante _Linux capabilities_.
 
-![[Screenshots/Tortuga/SS8.png]]
+![Uso de linpeas para encontrar vulnerabilidades](../../Screenshots/Tortuga/SS8.png)
 
 **Las Linux capabilities** son fragmentos de privilegios que normalmente solo tiene el usuario root. Permiten asignar permisos específicos a binarios sin darles acceso total al sistema. Por ejemplo, en vez de permitir que un programa sea root completo, puedes darle solo la capacidad de cambiar de usuario, acceder a la red, o montar sistemas de archivos.
 
@@ -87,7 +87,7 @@ python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
 
 Al ejecutar este comando, obtuve una sesión como `root`, lo que me permitió acceder a la `Flag de Root`.
 
-![[SS9.png]]
+![Escala de privilegios y obtención de flag root](../../Screenshots/Tortuga/SS9.png)
 
 **Segundo objetivo conseguido 🎉**
 
