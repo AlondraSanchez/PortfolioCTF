@@ -91,3 +91,11 @@ La explotación fue exitosa, y pude acceder al archivo `/root/root.txt` para cap
 ![Captura de Root Flag](../../Screenshots/Expressway/SS8.png)
 
 **Segundo objetivo logrado 🎉**
+
+# Conclusiones
+
+Este reto me recordó que el reconocimiento no termina con un escaneo TCP. El acceso inicial dependía de un puerto UDP —algo que normalmente paso por alto— y eso me obligó a replantear mi enfoque. Fue una buena lección sobre cómo los servicios menos evidentes pueden ser la puerta de entrada.
+
+También descubrí el protocolo **ISAKMP**, que hasta ahora no conocía. Investigar cómo funciona y cómo se puede explotar me permitió sumar nuevas técnicas y herramientas a mi kit de pentesting.
+
+La escalada de privilegios fue otro buen recordatorio: incluso las herramientas nativas del sistema, como `sudo`, pueden tener versiones vulnerables si no están parcheadas. Nunca está de más revisar lo que parece “seguro por defecto”.
