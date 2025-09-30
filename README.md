@@ -11,6 +11,9 @@ Labs&Writeups/
 ├── Plataforma/
 │   └── Nombre-de-Laboratorio.md
 
+Reportes/
+├── Nombre-de-reporte/
+
 Screenshots/
 ├── Nombre-de-Laboratorio/
 │   └── [Capturas relacionadas]
@@ -20,6 +23,7 @@ Screenshots/
 
 - Cada reto está documentado en un archivo .md dentro de su plataforma correspondiente, en la carpeta **Labs&Writeups**
 - Las capturas de pantalla se almacenan por reto en la carpeta **Screenshots**, pero la intención es que sean visibles en el propio writeup.
+- La carpeta **Reportes** contiene documentación a nivel ejecutivo y técnico de auditorías simuladas.
 
 ## 📬 Contacto
 
