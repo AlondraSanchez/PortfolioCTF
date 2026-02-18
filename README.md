@@ -11,6 +11,9 @@ Labs&Writeups/
 ├── Plataforma/
 │   └── Nombre-de-Laboratorio.md
 
+Reportes/
+└── Nombre-de-auditoria.pdf
+
 Screenshots/
 ├── Nombre-de-Laboratorio/
 │   └── [Capturas relacionadas]
