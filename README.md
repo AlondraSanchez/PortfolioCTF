@@ -51,7 +51,7 @@ This experience provided exposure to high-pressure problem solving, requiring ra
 - Initial access via unauthenticated remote code execution
 - Privilege escalation via SUID misconfiguration (Netdata service)
 
-👉 [Read writeup](root/writeups/hack-the-box/editor.md)
+👉 [Read writeup](root/writeups/hack-the-box/Editor.md)
 
 ## 📊 Security Reports
 

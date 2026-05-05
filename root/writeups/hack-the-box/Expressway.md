@@ -17,7 +17,7 @@ nmap -sV -sC -p- TARGET_IP
 
 Este escaneo reveló únicamente el puerto 22 abierto, con un servicio OpenSSH versión 10.0p2.
 
-![Escaneo con nmap](root/assets/expressway/SS1.png)
+![Escaneo con nmap](../../assets/expressway/SS1.png)
 
 Tras investigar dicha versión, no encontré vulnerabilidades conocidas que pudieran explotarse para obtener acceso.
 
@@ -29,7 +29,7 @@ sudo nmap -sU --top-ports 100 TARGET_IP
 
 Entre los resultados, se identificó el puerto 500 abierto.
 
-![Escaneo de puertos UDP](root/assets/expressway/SS2.png)
+![Escaneo de puertos UDP](../../assets/expressway/SS2.png)
 
 Este puerto corresponde al protocolo **ISAKMP**, utilizado para negociar claves y asociaciones de seguridad en redes IP, especialmente en VPNs. Si está expuesto públicamente o mal configurado (por ejemplo, sin autenticación robusta o con versiones vulnerables de IKE), puede permitir a un atacante interceptar o manipular el proceso de negociación y acceder a la red interna.
 
@@ -44,7 +44,7 @@ Donde:
 
 Como resultado, el servicio respondió con un posible nombre de usuario `USER@expressway.htb` y un hash que podría representar una credencial.
 
-![Análisis con ike-scan](root/assets/expressway/SS3.png)
+![Análisis con ike-scan](../../assets/expressway/SS3.png)
 
 Guardé el hash en un archivo llamado `psk.txt` y utilicé el diccionario `rockyou` para realizar un ataque de fuerza bruta:
 
@@ -54,7 +54,7 @@ psk-crack -d /usr/share/wordlists/rockyou.txt psk.txt
 
 Como resultado, obtuve una contraseña
 
-![Crackeo de hash con pask-crack](root/assets/expressway/SS4.png)
+![Crackeo de hash con pask-crack](../../assets/expressway/SS4.png)
 
 # Acceso al sistema
 
@@ -66,7 +66,7 @@ ssh USER@TARGET_IP
 
 El acceso fue exitoso, y la primera `flag` se encontraba en el directorio `home` del usuario.
 
-![Acceso por SSH y captura de User Flag](root/assets/expressway/SS5.png)
+![Acceso por SSH y captura de User Flag](../../assets/expressway/SS5.png)
 
 **Primer objetivo conseguido** 🎉
 
@@ -80,15 +80,15 @@ Si bien, el usuario no está dentro del grupo de *sudoers*, aún así es posible
 sudo -V
 ```
 
-![Validación de versión de sudo](root/assets/expressway/SS6.png)
+![Validación de versión de sudo](../../assets/expressway/SS6.png)
 
 La versión 1.9.17 de `sudo` está afectada por la vulnerabilidad **CVE-2025-32462**, que permite la elevación de privilegios. Para explotarla, utilicé el script publicado por [Stratascale](https://www.exploit-db.com/exploits/52352).
 
-![Escala de privilegios](root/assets/expressway/SS7.png)
+![Escala de privilegios](../../assets/expressway/SS7.png)
 
 La explotación fue exitosa, y pude acceder al archivo `/root/root.txt` para capturar la segunda `flag`.
 
-![Captura de Root Flag](root/assets/expressway/SS8.png)
+![Captura de Root Flag](../../assets/expressway/SS8.png)
 
 **Segundo objetivo logrado 🎉**
 
