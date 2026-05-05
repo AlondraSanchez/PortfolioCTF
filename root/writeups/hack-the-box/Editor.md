@@ -17,16 +17,16 @@ nmap -sV -sC -p- TARGET_IP
 
 El resultado arrojó la existencia de una web alojada en el puerto 80, la cual redirige a la url `http://editor.htb/`, así como la existencia de un servidor Jetty, aparentemente versión `10.0.20`
 
-![Escaneo con nmap](../../Screenshots/Editor/SS1.png)
+![Escaneo con nmap](root/assets/editor/SS1.png)
 
 Para acceder a la web es necesario agregar el dominio en el archivo hosts. Una vez hecho esto, se muestra una web.
 
-![Web alojada en servidor](../../Screenshots/Editor/SS2.png)
+![Web alojada en servidor](root/assets/editor/SS2.png)
 
 Lo interesante se encuentra en el apartado `Docs` que redirige a una web `XWiki`.
 Al observar el pie de página, se muestra información de la tecnología que sirve esta web, específicamente que se trata de `XWiki Debian 15.10.8`
 
-![XWiki](../../Screenshots/Editor/SS3.png)
+![XWiki](root/assets/editor/SS3.png)
 
 # Acceso al sistema
 
@@ -34,8 +34,8 @@ Esta versión de `Xwiki` se ve afectada por la vulnerabilidad [CVE-2025-24893](h
 
 En mi caso, aproveche dicha vulnerabilidad utilizando el siguiente [exploit](https://github.com/dollarboysushil/CVE-2025-24893-XWiki-Unauthenticated-RCE-Exploit-POC?tab=readme-ov-file), ejecutándolo desde mi máquina atacante, colocando los parámetros solicitados y abriendo un puerto para recibir la *reverse shell*.
 
-![[Screenshots/Editor/SS4.png]]
-![[Screenshots/Editor/SS5.png]]
+![[root/assets/editor/SS4.png]]
+![[root/assets/editor/SS5.png]]
 
 Una vez dentro de la máquina, utilicé un script para mejorar el entorno y hacer un poco más fácil la navegación
 
@@ -43,21 +43,21 @@ Una vez dentro de la máquina, utilicé un script para mejorar el entorno y hace
 script /dev/null -c bash
 ```
 
-![[Screenshots/Editor/SS6.png]]
+![[root/assets/editor/SS6.png]]
 
 Tras revisar los diferentes archivos de configuración accesibles con el usuario `xwiki`, encontré un grupo de credenciales.
 
-![[Screenshots/Editor/SS7.png]]
+![[root/assets/editor/SS7.png]]
 
 Con las credenciales obtenidas es posible acceder a la base de datos, sin embargo, tras inspeccionarla no encontré información que pudiera conducirme hacia la captura de las banderas.
 
 Al revisar el sistema, encontré la existencia de un usuario.
 
-![[Screenshots/Editor/SS8.png]]
+![[root/assets/editor/SS8.png]]
 
 El siguiente paso fue probar las contraseñas encontradas anteriormente con el usuario existente en el sistema mediante SSH, y la respuesta fue positiva. De este modo conseguí acceso al sistema como usuario.
 
-![[Screenshots/Editor/SS9.png]]
+![[root/assets/editor/SS9.png]]
 
 Al igual que en otros retos de este tipo, la `user flag` se encontraba en el `home` del usuario.
 
