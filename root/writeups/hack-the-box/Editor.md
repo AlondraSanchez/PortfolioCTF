@@ -1,105 +1,187 @@
-# Resumen
+# Overview
 
-**Nombre del reto:** [Editor](https://app.hackthebox.com/machines/Editor)
+**Target**:  [Editor](https://app.hackthebox.com/machines/Editor)
+**Difficulty:** Easy
 
-**Dificultad:** Fácil
+<details>  
+<summary>⚠️ Quick summary (spoiler)</summary>  
+  
+This machine involves exploiting an unauthenticated RCE in XWiki followed by privilege escalation via a misconfigured SUID binary.
+  
+</details>
 
-**Objetivos:**
-1. Conseguir acceso como usuario y obtener la `User Flag` 
-2. Escalar privilegios y obtener la `Root Flag`
-# Reconocimiento
+# Reconnaissance
 
-El primer paso fue realizar tareas de **reconocimiento** utilizando `nmap`, con el objetivo de identificar puertos abiertos y servicios activos en la máquina. Comencé con un escaneo completo de puertos:
+As a first step, I performed network reconnaissance using `nmap` to identify exposed services and potential attack vectors.
 
 ```bash
 nmap -sV -sC -p- TARGET_IP
 ```
 
-El resultado arrojó la existencia de una web alojada en el puerto 80, la cual redirige a la url `http://editor.htb/`, así como la existencia de un servidor Jetty, aparentemente versión `10.0.20`
+* `-sV` to determine service and version
+* `-sC` to run the default script scan (useful to identify attack vectors)
+* `-p-` to scan all TCP ports
 
-![Escaneo con nmap](../../assets/editor/SS1.png)
+![Nmap scan](../../assets/editor/SS1.png)
 
-Para acceder a la web es necesario agregar el dominio en el archivo hosts. Una vez hecho esto, se muestra una web.
+The scan revealed an HTTP service running on port 80, backed by `Jetty 10.0.20`, which redirected to `http://editor.htb/`.
 
-![Web alojada en servidor](../../assets/editor/SS2.png)
+The presence of Jetty suggests a Java-based web application, which is often associated with frameworks that may expose version information or known vulnerabilities through their web interface. This made the web application the primary target for further analysis.
 
-Lo interesante se encuentra en el apartado `Docs` que redirige a una web `XWiki`.
-Al observar el pie de página, se muestra información de la tecnología que sirve esta web, específicamente que se trata de `XWiki Debian 15.10.8`
+# Web Enumeration
 
-![XWiki](../../assets/editor/SS3.png)
+Once added the domain to `hosts`, I was able to access `http://editor.htb`.
 
-# Acceso al sistema
+![Hosted web in server](../../assets/editor/SS2.png)
 
-Esta versión de `Xwiki` se ve afectada por la vulnerabilidad [CVE-2025-24893](https://www.incibe.es/index.php/incibe-cert/alerta-temprana/vulnerabilidades/cve-2025-24893), donde un invitado puede ejecutar código de forma remota.
+Navigating to the **"Docs"** section from the main menu redirects the user to a `XWiki` instance. Upon inspection of the page footer, the specific software version was identified as `XWiki Debian 15.10.8`.
 
-En mi caso, aproveche dicha vulnerabilidad utilizando el siguiente [exploit](https://github.com/dollarboysushil/CVE-2025-24893-XWiki-Unauthenticated-RCE-Exploit-POC?tab=readme-ov-file), ejecutándolo desde mi máquina atacante, colocando los parámetros solicitados y abriendo un puerto para recibir la *reverse shell*.
+![XWiki interface](../../assets/editor/SS3.png)
 
-![Exploit](../../assets/editor/SS4.png)
-![RCE](../../assets/editor/SS5.png)
+`XWiki` is an open-source platform commonly used for knowledge bases, intranets, and collaborative documentation, featuring a WYSIWYG editor and dynamic content rendering.  
+  
+Identifying the exact version is particularly valuable, as web applications like `XWiki` often have publicly documented vulnerabilities. This makes version enumeration a critical step, since it allows mapping the target to known CVEs and potential exploitation paths.
+# Initial Access
 
-Una vez dentro de la máquina, utilicé un script para mejorar el entorno y hacer un poco más fácil la navegación
+## Vulnerability Analysis  
+  
+Further investigation revealed that `XWiki 15.10.8` is vulnerable to [CVE-2025-24893](https://nvd.nist.gov/vuln/detail/CVE-2025-24893), which allows unauthenticated users to achieve remote code execution via the `SolrSearch` endpoint.  
+
+The root cause lies in improper input validation of the `text` parameter. This parameter is used to construct and execute a query against the application's search backend.  
+
+When the request includes `media=rss`, the value of the `text` parameter is embedded directly into the generated RSS feed (specifically within the title and description fields). Due to insufficient sanitization, **this allows injection of malicious payloads that are processed and executed by the server.**
+  
+In this context, `Solr` refers to the search engine used by `XWiki` to index and retrieve content. The vulnerability arises from how user-controlled input is incorporated into Solr query results and subsequently rendered.  
+  
+This behavior effectively turns a search feature into a code execution vector, enabling attackers to execute arbitrary commands without authentication.  
+
+## Exploitation  
+  
+Based on the vendor advisory, the exploit consists of crafting a malicious request to the `SolrSearch` endpoint, injecting a payload through the `text` parameter.  
+  
+Rather than blindly executing a public exploit, understanding how the payload is reflected and processed is key to reliably triggering the vulnerability.
+
+### Exploit analysis
+
+A public [POC exploit](https://github.com/dollarboysushil/CVE-2025-24893-XWiki-Unauthenticated-RCE-Exploit-POC?tab=readme-ov-file) was used to trigger the vulnerability. This script crafts a malicious request to the `SolrSearch` endpoint, injecting a payload through the `text` parameter.
+
+As previously described, when `media=rss` is used, the injected payload is embedded into the generated RSS feed. Due to insufficient input sanitization, this content is processed server-side, ultimately leading to arbitrary command execution.
+
+The exploit ultimately triggers a reverse shell by instructing the target to initiate a connection back to the attacker's machine.
+
+![Exploit execution](../../assets/editor/SS4.png)
+
+To adapt the exploit to the lab environment, the target URL and callback parameters were set accordingly. A listener was configured on the attacker's machine to receive the incoming connection.
+
+![Access as xwiki user](../../assets/editor/SS5.png)
+
+## Shell stabilization
+
+After obtaining an initial reverse shell, the environment was limited and lacked full TTY functionality, which restricted usability (e.g., command editing, job control, and proper signal handling).  
+
+To improve the interaction with the shell, I spawned a proper TTY using:
 
 ```bash
 script /dev/null -c bash
 ```
 
+This technique creates a more stable and interactive shell session, allowing better control over the compromised system and improving usability for further enumeration and privilege escalation tasks.
+
 ![Better navigation](../../assets/editor/SS6.png)
 
-Tras revisar los diferentes archivos de configuración accesibles con el usuario `xwiki`, encontré un grupo de credenciales.
+# User pivoting
 
-![Credentials](../../assets/editor/SS7.png)
-
-Con las credenciales obtenidas es posible acceder a la base de datos, sin embargo, tras inspeccionarla no encontré información que pudiera conducirme hacia la captura de las banderas.
-
-Al revisar el sistema, encontré la existencia de un usuario.
+After gaining initial access as the `xwiki` user, I was able to enumerate the system and identify additional local users by inspecting the `/home` directory.  
 
 ![User found](../../assets/editor/SS8.png)
 
-El siguiente paso fue probar las contraseñas encontradas anteriormente con el usuario existente en el sistema mediante SSH, y la respuesta fue positiva. De este modo conseguí acceso al sistema como usuario.
+This step revealed the presence of another valid system user, which became relevant later in the attack chain.  
+  
+During further enumeration, I accessed the `hibernate.cfg.xml` configuration file, which exposed database credentials used by the application.
+
+![Database credentials](../../assets/editor/SS7.png)
+
+At this point, an important observation was made: the credentials stored in the configuration file appeared to be reused from a local system user account.  
+  
+This indicated weak credential hygiene, where the same password was used both for system authentication and database access.  
+  
+By correlating the discovered username from `/home` with the reused credentials found in the configuration file, it was possible to authenticate as the user on the system, achieving a successful pivot from the initial `xwiki` context.
 
 ![Remote connection](../../assets/editor/SS9.png)
 
-Al igual que en otros retos de este tipo, la `user flag` se encontraba en el `home` del usuario.
+With access to the user account achieved, the user flag was successfully retrieved from the corresponding home directory, completing the initial objective of the machine.
 
 ![User flag found](../../assets/editor/SS10.png)
 
-**Primera bandera capturada 🎉**
+# Privilege escalation
 
-# Escala de privilegios
+After obtaining user-level access, enumeration of the system was performed to identify potential privilege escalation vectors.  
 
-Para escalar privilegios, revisé si existían binarios con permisos SUID de los cuales pudiera aprovecharme, para lo cual utilicé el comando
+## SUID Enumeration  
+
+During system enumeration, binaries with SUID permissions were identified as potential privilege escalation vectors.  
+
+SUID (Set User ID) is a Linux permission that allows a file to be executed with the privileges of its owner. When a binary owned by `root` has the SUID bit set, any vulnerability within that binary can potentially be abused to execute commands with elevated privileges.  
+
+To identify such binaries, the following command was executed:
 
 ```bash
 find / -type f -perm -04000 -ls 2>/dev/null
 ```
 
-El resultado mostró una lista de binarios inusuales, provenientes de la herramienta netdata.
-
-> **Netdata** es una herramienta para visualizar y monitorear métricas en tiempo real, optimizada para acumular todo tipo de datos, como uso de CPU, actividad de disco, consultas SQL, visitas a un sitio web, etc.
-*Fuente: Wikipedia*
+This revealed multiple unusual binaries associated with **Netdata**, a real-time system monitoring tool.
 
 ![List of binary files](../../assets/editor/SS11.png)
 
-En algunas versiones de **NetData**, existe una vulnerabilidad ([CVE-2024-32019](https://nvd.nist.gov/vuln/detail/CVE-2024-32019)) que permite a un atacante ejecutar programas arbitrariamente con permisos de super usuario.
+Netdata is commonly used to monitor system performance metrics such as CPU usage, disk activity, and network traffic. However, when improperly configured or running outdated versions, it can introduce privilege escalation risks.
 
-Para aprovechar dicha vulnerabilidad, utilicé el siguiente [exploit](https://github.com/AliElKhatteb/CVE-2024-32019-POC), cuyo funcionamiento consiste en un código escrito en lenguaje C, el cual, al ejecutarse, se autoconfigura para ejecutarse con permisos de administrador, y después abre una shell reversa con el usuario **root**.
+## Exploitation
+
+The installed version of Netdata was found to be affected by  [CVE-2024-32019](https://nvd.nist.gov/vuln/detail/CVE-2024-32019), which allows execution of arbitrary commands with elevated privileges.  
+  
+In this scenario, the Netdata binary is owned by `root` and has the SUID bit set, meaning any exploitable behavior within the service can be leveraged to escalate privileges directly to the highest level on the system.  
+  
+A public [proof-of-concept exploit](https://github.com/AliElKhatteb/CVE-2024-32019-POC) was used to leverage this vulnerability.
+  
+The exploit abuses Netdata’s execution context to trigger arbitrary command execution, resulting in a root-level shell.
  
 ![CVE exploit](../../assets/editor/SS12.png)
 
-Para asegurar el funcionamiento del exploit, lo descargué, edité y compilé siguiendo las instrucciones del autor en mi máquina atacante. Una vez compilado lo envié hacia la máquina víctima por medio de `scp`.
+The exploit was compiled locally and transferred to the target system via `scp`.
 
 ![Sending binary via scp](../../assets/editor/SS13.png)
 
-Una vez teniendo el binario en la máquina víctima, sólo queda ejecutarlo correctamente: Primero debe abrirse un puerto a la escucha en la máquina atacante, donde se recibirá la shell reversa, y posteriormente se lanza el binario en la máquina víctima.
-
-Como usuario root, es posible leer la flag ubicada en `/root/root.txt`.
+A listener was configured on the attacker machine, and upon execution, a reverse shell was successfully obtained with root privileges.
 
 ![Root flag found](../../assets/editor/SS14.png)
 
-**Segundo objetivo conseguido 🎉**
+With administrative access achieved, the final flag located in `/root/root.txt` was retrieved, fully compromising the system.
 
-# Conclusiones
+# Conclusion
 
-Este reto demuestra principalmente la potencial amenaza que representa el uso de tecnologías desactualizadas, pero también nos refleja uno de los hábitos más comunes y menos seguros: la reutilización de contraseñas.
+This machine demonstrated how multiple low-complexity issues can be chained together to achieve full system compromise. Starting from an unauthenticated remote code execution vulnerability in a web application, followed by credential exposure and privilege misconfigurations, the attack path ultimately led to root-level access.
 
-La máquina **Editor** me ha servido para fortalecer mi habilidad en la búsqueda de vulnerabilidades conocidas, y aunque en esta ocasión me he tenido que valer de *exploits* creados por otras personas, estudiarlos me ayuda también a entrenar mi capacidad de comprender código para cuando llegue el momento de programar mis propias herramientas.
+The exercise highlights the importance of secure configuration practices and proper input validation across all layers of an application.
+
+# Real-World Impact
+
+If exploited in a real-world environment, this attack chain could have severe consequences:
+
+- Full remote compromise of the application server without authentication
+- Exposure of sensitive application and database data
+- Unauthorized access to system-level user accounts due to credential reuse
+- Complete system takeover via privilege escalation
+
+This demonstrates how a single initial vulnerability, when combined with misconfigurations, can escalate into full infrastructure compromise.
+
+# Mitigation
+
+To reduce the risk of similar attacks, the following measures should be implemented:
+
+- **Patch management:** Update `XWiki` to a version that fixes CVE-2025-24893
+- **Input validation:** Ensure proper sanitization of user-controlled parameters in all endpoints
+- **Credential hygiene:** Avoid reusing credentials across system services and application configurations
+- **Least privilege principle:** Restrict SUID binaries and audit unnecessary elevated permissions
+- **Service hardening:** Regularly review and secure monitoring tools such as Netdata
+
+Proper implementation of these controls significantly reduces the attack surface and prevents full system compromise from a single initial entry point.
