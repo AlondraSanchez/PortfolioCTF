@@ -1,6 +1,7 @@
 # Overview
 
 **Target**:  [Editor](https://app.hackthebox.com/machines/Editor)
+
 **Difficulty:** Easy
 
 <details>  
