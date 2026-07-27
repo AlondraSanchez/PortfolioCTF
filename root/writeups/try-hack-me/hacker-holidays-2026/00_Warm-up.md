@@ -61,7 +61,7 @@ VEh...mQhfQ==
 
 Decoding the resulting Base64 string successfully recovered the challenge flag.
 
-## Conclusion
+# Conclusion
 
 This challenge demonstrates a common principle in OSINT investigations: valuable information is often distributed across multiple public sources rather than exposed in a single location.
 
