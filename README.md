@@ -17,7 +17,7 @@ Every writeup follows a structured methodology, emphasizing technical accuracy, 
 
 - [🦠 Santander put a hold on a transfer to my account (and I was not a customer of any bank)](root/reports/Santander-phishing-campaign-investigation.md)
 - [🔓 RSA is not safe](root/writeups/the-hackers-labs/Bancarrota.md)
-- [🌴 Hacker Holidays 2026: A TryHackMe challenge](root/writeups/hacker-holidays-2026/)
+- [🌴 Hacker Holidays 2026: A TryHackMe challenge](root/writeups/try-hack-me/hacker-holidays-2026/)
 
 ## Repository Structure
 
@@ -34,4 +34,5 @@ root/
 - [LinkedIn](https://www.linkedin.com/in/ajjs)
 - [TryHackMe](https://tryhackme.com/p/Chezal)
 - [HackTheBox](https://app.hackthebox.com/public/users/2468843)
+
 *Open to junior cybersecurity roles (Offensive Security / Pentesting / Red Team)*
