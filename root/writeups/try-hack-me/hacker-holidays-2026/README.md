@@ -24,10 +24,10 @@ Welcome to my writeups repository for TryHackMe's **Hacker Holidays 2026** event
 |  **Day 2**  | Room 404                     | Web                   | 🟢 Very Easy |              [Read Writeup](02_Room%20404.md)              | ✅ Completed |
 |  **Day 3**  | Complimentary                | Cloud                 |   🟢 Easy    |            [Read Writeup](03_Complimentary.md)             | ✅ Completed |
 |  **Day 4**  | Packed Light                 | Forensics             |   🟢 Easy    |            [Read Writeup](04_Packed%20Light.md)            | ✅ Completed |
-|  **Day 5**  | Beach Bar                    | Boot2Root             |   🟢 Easy    |                        Coming Soon                         | ✅ Completed |
+|  **Day 5**  | Beach Bar                    | Boot2Root             |   🟢 Easy    |               [Read Writeup](05_Beach%20Bar)               | ✅ Completed |
 |  **Day 6**  | Overheard at Breakfast       | OSINT                 |   🟢 Easy    |                        Coming Soon                         | ✅ Completed |
 |  **Day 7**  | Do Not Disturb               | Boot2Root             |  🟡 Medium   |                        Coming Soon                         | ✅ Completed |
-|  **Day 8**  | Towel on the Sunbed          | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
+|  **Day 8**  | Towel on the Sunbed          | Web                   |  🟡 Medium   |                        Coming Soon                         | ✅ Completed |
 |  **Day 9**  | CryptoCabana                 | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
 | **Day 10**  | The Hollow Shell             | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
 | **Day 11**  | Infinity Pool                | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
