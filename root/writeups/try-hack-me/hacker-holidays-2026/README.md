@@ -15,7 +15,7 @@ Welcome to my writeups repository for TryHackMe's **Hacker Holidays 2026** event
 
 ## Progress Tracker & Writeup Directory
 
-**NOTE:** I'll be uploading the writeups for each challenge **5 days after it goes live** to give everyone a chance to solve them first. Stay tuned!
+**NOTE:** I’ll upload the writeups for each challenge once **the official THM walkthrough** is out
 
 | Day / Task  | Challenge Name               | Primary Domain        |  Difficulty  |                        Writeup Link                        |   Status    |
 | :---------: | :--------------------------- | :-------------------- | :----------: | :--------------------------------------------------------: | :---------: |
@@ -25,8 +25,8 @@ Welcome to my writeups repository for TryHackMe's **Hacker Holidays 2026** event
 |  **Day 3**  | Complimentary                | Cloud                 |   🟢 Easy    |            [Read Writeup](03_Complimentary.md)             | ✅ Completed |
 |  **Day 4**  | Packed Light                 | Forensics             |   🟢 Easy    |            [Read Writeup](04_Packed%20Light.md)            | ✅ Completed |
 |  **Day 5**  | Beach Bar                    | Boot2Root             |   🟢 Easy    |                        Coming Soon                         | ✅ Completed |
-|  **Day 6**  | Overheard at Breakfast       | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
-|  **Day 7**  | Do Not Disturb               | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
+|  **Day 6**  | Overheard at Breakfast       | OSINT                 |   🟢 Easy    |                        Coming Soon                         | ✅ Completed |
+|  **Day 7**  | Do Not Disturb               | Boot2Root             |  🟡 Medium   |                        Coming Soon                         | ✅ Completed |
 |  **Day 8**  | Towel on the Sunbed          | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
 |  **Day 9**  | CryptoCabana                 | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
 | **Day 10**  | The Hollow Shell             | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
