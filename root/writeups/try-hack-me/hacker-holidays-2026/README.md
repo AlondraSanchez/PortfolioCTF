@@ -17,23 +17,23 @@ Welcome to my writeups repository for TryHackMe's **Hacker Holidays 2026** event
 
 **NOTE:** I’ll upload the writeups for each challenge once **the official THM walkthrough** is out
 
-| Day / Task  | Challenge Name               | Primary Domain        |  Difficulty  |                        Writeup Link                        |   Status    |
-| :---------: | :--------------------------- | :-------------------- | :----------: | :--------------------------------------------------------: | :---------: |
-| **Warm-up** | The Brochure                 | OSINT                 | 🟢 Very Easy |               [Read Writeup](00_Warm-up.md)                | ✅ Completed |
-|  **Day 1**  | The Concierge Knows Too Much | AI & Prompt Injection | 🟢 Very Easy | [Read Writeup](01_The%20Concierge%20Knows%20Too%20Much.md) | ✅ Completed |
-|  **Day 2**  | Room 404                     | Web                   | 🟢 Very Easy |              [Read Writeup](02_Room%20404.md)              | ✅ Completed |
-|  **Day 3**  | Complimentary                | Cloud                 |   🟢 Easy    |            [Read Writeup](03_Complimentary.md)             | ✅ Completed |
-|  **Day 4**  | Packed Light                 | Forensics             |   🟢 Easy    |            [Read Writeup](04_Packed%20Light.md)            | ✅ Completed |
-|  **Day 5**  | Beach Bar                    | Boot2Root             |   🟢 Easy    |             [Read Writeup](05_Beach%20Bar.md)              | ✅ Completed |
-|  **Day 6**  | Overheard at Breakfast       | OSINT                 |   🟢 Easy    |                        Coming Soon                         | ✅ Completed |
-|  **Day 7**  | Do Not Disturb               | Boot2Root             |  🟡 Medium   |                        Coming Soon                         | ✅ Completed |
-|  **Day 8**  | Towel on the Sunbed          | Web                   |  🟡 Medium   |                        Coming Soon                         | ✅ Completed |
-|  **Day 9**  | CryptoCabana                 | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
-| **Day 10**  | The Hollow Shell             | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
-| **Day 11**  | Infinity Pool                | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
-| **Day 12**  | After Hours                  | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
-| **Day 13**  | The Guestbook                | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
-| **Day 14**  | Management Wants a Word      | *Unreleased*          | *Unreleased* |                        Coming Soon                         |  ⏳ Pending  |
+| Day / Task  | Challenge Name               | Primary Domain           |  Difficulty  |                        Writeup Link                        |        Status        |
+| :---------: | :--------------------------- | :----------------------- | :----------: | :--------------------------------------------------------: | :------------------: |
+| **Warm-up** | The Brochure                 | 🕵️ OSINT                | 🟢 Very Easy |               [Read Writeup](00_Warm-up.md)                |     ✅ Completed      |
+|  **Day 1**  | The Concierge Knows Too Much | 🤖 AI & Prompt Injection | 🟢 Very Easy | [Read Writeup](01_The%20Concierge%20Knows%20Too%20Much.md) |     ✅ Completed      |
+|  **Day 2**  | Room 404                     | 🌐 Web                   | 🟢 Very Easy |              [Read Writeup](02_Room%20404.md)              |     ✅ Completed      |
+|  **Day 3**  | Complimentary                | ☁️ Cloud                 |   🟢 Easy    |            [Read Writeup](03_Complimentary.md)             |     ✅ Completed      |
+|  **Day 4**  | Packed Light                 | 🔎 Forensics             |   🟢 Easy    |            [Read Writeup](04_Packed%20Light.md)            |     ✅ Completed      |
+|  **Day 5**  | Beach Bar                    | 🚩 Boot2Root             |   🟢 Easy    |             [Read Writeup](05_Beach%20Bar.md)              |     ✅ Completed      |
+|  **Day 6**  | Overheard at Breakfast       | 🕵️ OSINT                |   🟢 Easy    |      [Read Writeup](06_Overheard%20at%20Breakfast.md)      |     ✅ Completed      |
+|  **Day 7**  | Do Not Disturb               | 🚩 Boot2Root             |  🟡 Medium   |                        Coming Soon                         |     ✅ Completed      |
+|  **Day 8**  | Towel on the Sunbed          | 🌐 Web                   |  🟡 Medium   |                        Coming Soon                         |     ✅ Completed      |
+|  **Day 9**  | CryptoCabana                 | ☁️ Cloud                 |  🟡 Medium   |                        Coming Soon                         | 🛠️ Work In Progress |
+| **Day 10**  | The Hollow Shell             | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
+| **Day 11**  | Infinity Pool                | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
+| **Day 12**  | After Hours                  | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
+| **Day 13**  | The Guestbook                | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
+| **Day 14**  | Management Wants a Word      | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
 
 ## Key Takeaways & Skills Demonstrated
 
