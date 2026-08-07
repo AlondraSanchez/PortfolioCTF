@@ -26,12 +26,12 @@ Welcome to my writeups repository for TryHackMe's **Hacker Holidays 2026** event
 |  **Day 4**  | Packed Light                 | 🔎 Forensics             |   🟢 Easy    |            [Read Writeup](04_Packed%20Light.md)            |     ✅ Completed      |
 |  **Day 5**  | Beach Bar                    | 🚩 Boot2Root             |   🟢 Easy    |             [Read Writeup](05_Beach%20Bar.md)              |     ✅ Completed      |
 |  **Day 6**  | Overheard at Breakfast       | 🕵️ OSINT                |   🟢 Easy    |      [Read Writeup](06_Overheard%20at%20Breakfast.md)      |     ✅ Completed      |
-|  **Day 7**  | Do Not Disturb               | 🚩 Boot2Root             |  🟡 Medium   |                        Coming Soon                         |     ✅ Completed      |
+|  **Day 7**  | Do Not Disturb               | 🚩 Boot2Root             |  🟡 Medium   |          [Read Writeup](07_Do%20Not%20Disturb.md)          |     ✅ Completed      |
 |  **Day 8**  | Towel on the Sunbed          | 🌐 Web                   |  🟡 Medium   |                        Coming Soon                         |     ✅ Completed      |
-|  **Day 9**  | CryptoCabana                 | ☁️ Cloud                 |  🟡 Medium   |                        Coming Soon                         | 🛠️ Work In Progress |
-| **Day 10**  | The Hollow Shell             | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
-| **Day 11**  | Infinity Pool                | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
-| **Day 12**  | After Hours                  | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
+|  **Day 9**  | CryptoCabana                 | ☁️ Cloud                 |  🟡 Medium   |                        Coming Soon                         |     ✅ Completed      |
+| **Day 10**  | The Hollow Shell             | 🌐 Web                   |  🟡 Medium   |                        Coming Soon                         |     ✅ Completed      |
+| **Day 11**  | Infinity Pool                | 🚩 Boot2Root             |  🟡 Medium   |                        Coming Soon                         |     ✅ Completed      |
+| **Day 12**  | After Hours                  | 🔎 Forensics             |  🟡 Medium   |                        Coming Soon                         | 🛠️ Work in progress |
 | **Day 13**  | The Guestbook                | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
 | **Day 14**  | Management Wants a Word      | *Unreleased*             | *Unreleased* |                        Coming Soon                         |      ⏳ Pending       |
 
